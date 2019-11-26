@@ -1,0 +1,180 @@
+{% load static %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+   
+    <title>Majestic Admin</title>
+    <!-- Django-CRM -->
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+
+    <link href="https://django-crm-demo.s3.amazonaws.com/CACHE/css/9d3985ac880f.css" type="text/x-scss" rel="stylesheet" />
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'ak_dashboard/vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ak_dashboard/vendors/base/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'ak_dashboard/vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'ak_dashboard/css/style.css' %}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{% static 'ak_dashboard/images/favicon.png' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet" />
+
+    <!--  Light Bootstrap Table core CSS    -->
+   
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="{% static 'css/demo.css' %}" rel="stylesheet" /> {% block extralinks %} {% endblock %}
+</head>
+
+<body>
+    <div class="container-scroller">
+        {% block header %}
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" style="margin-bottom: 0px;">
+            <div class="navbar-brand-wrapper d-flex justify-content-center">
+                <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+                    <a class="navbar-brand brand-logo" href="#" style="color: #4d83ff">Akounter</a>
+                    <a class="navbar-brand brand-logo-mini" href="#" style="color: #4d83ff">Akounter</a>
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-sort-variant"></span>
+          </button>
+                </div>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-4 w-100">
+                    <li class="nav-item nav-search d-none d-lg-block w-100">
+                        <a href="#">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Documentum</p>
+                        </a>
+                        <!-- <a href="#">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">CRM</p>
+                        </a>
+                        <a href="#">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Inventory</p>
+                        </a> -->
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+             
+              {% if employee.image %}
+      						  <img src="#" class="img-fluid rounded-circle-image"width="25" height="25" >{{ request.user}}
+                    {% else %}
+                    <img src="/media/static/images/user.png" class="img-fluid rounded-circle-image" />{{ request.user}}
+                    {% endif %}
+              
+           
+             
+            </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                            {% if request.user.role == "ADMIN" or request.user.is_superuser %}
+                            <!-- <a class="dropdown-item" href="#">Users</a> -->
+                            <a class="dropdown-item" href="#">Settings</a> {% endif %} {% if request.user.email != "admin@micropyramid.com" %}
+                            <a class="dropdown-item" href="#">Change Password</a> {% endif %}
+                            <a class="dropdown-item" href="# %}">Profile</a>
+                            <a class="dropdown-item" href="{% url 'documentum_app:account_logout' %}">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+            </div>
+        </nav>
+        {% endblock %}
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper" style="padding-top:3%;padding-left:0px;">
+            <!-- partial:partials/_sidebar.html -->
+            {% block main_menu %}{% endblock %}
+            <div class="main-panel">
+                <div class="content-wrapper"style="margin-top: 15px;" >
+                    {% block breadcrumb %} {% endblock %} {% block content %} {% endblock %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="{% static 'ak_dashboard/vendors/base/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="{% static 'ak_dashboard/vendors/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'ak_dashboard/vendors/datatables.net/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'ak_dashboard/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="{% static 'ak_dashboard/js/off-canvas.js' %}"></script>
+    <script src="{% static 'ak_dashboard/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'ak_dashboard/js/template.js' %}"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="{% static 'ak_dashboard/js/dashboard.js' %}"></script>
+    <script src="{% static 'ak_dashboard/js/data-table.js' %}"></script>
+    <script src="{% static 'ak_dashboard/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'ak_dashboard/js/dataTables.bootstrap4.js' %}"></script>
+    <!-- Django-CRM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+
+    {% block js_block %}{% endblock js_block %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            word = window.location.pathname.split('/')[1];
+            if (word == "") {
+                $("#dashboard").addClass('active');
+            } else {
+                $('#' + word).addClass('active');
+            }
+            marketing_word = window.location.pathname.split('/')[2];
+            if (marketing_word == "") {
+                $("#marketing-dashboard").addClass('active');
+            }
+            // console.log(marketing_word.substring(0,7) === 'contact');
+            else if (marketing_word.substring(0, 7) === "contact") {
+                $("#contact").css({
+                    'border-bottom': '3px solid #099CBE,'
+                });
+                $(".contact_class").css('border-bottom', '3px solid #099CBE');
+                marketing_word = window.location.pathname.split('/')[2]
+                if (marketing_word == 'contact-list') {
+                    $(".contact-list").css('background', '#e5e5e5');
+                }
+                if (marketing_word == 'contacts') {
+                    $(".contacts").css('background', '#e5e5e5');
+                }
+                // $("#contacts").css('background','#e5e5e5');
+            } else {
+                $('#' + marketing_word).addClass('active')
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

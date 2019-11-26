@@ -1,0 +1,136 @@
+{% extends 'root.html' %} {% block main_menu %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard:dashboard' %}">
+                <i class="mdi mdi-chart-pie menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+
+        <!-- <li class="nav-item">
+      <a class="nav-link" href="{% url 'accounts:userprofile' %}">
+        <i class="mdi mdi-account-circle menu-icon"></i>
+        <span class="menu-title">User Profile</span>
+      </a>
+    </li> -->
+        {% if request.user.is_staff %}
+        <li class="nav-item ">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="mdi mdi-account-circle menu-icon"></i>
+                <span class="menu-title">User </span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item "><a class="nav-link" href="#">User Profile</a></li>
+                    <li class="nav-item "><a class="nav-link" href="#">Create Users</a></li>
+                    <li class="nav-item "><a class="nav-link" href="#">All Users</a></li>
+                </ul>
+            </div>
+        </li>
+
+        <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard:employees' %}">
+          <i class="mdi mdi-account-multiple menu-icon"></i>
+          <span class="menu-title">emplyee</span>
+        </a>
+      </li> -->
+        <li class="nav-item ">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
+                <i class="mdi mdi-account-multiple menu-icon"></i>
+                <span class="menu-title">Employee</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic1">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:employeecreate' %}">Add Employee</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:emp_salary' %}">Add Employee salary</a></li>
+                    <li class="nav-item "><a class="nav-link" class="nav-item " href="{% url 'dashboard:employees' %}">All Employees</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:emergencycreate' %}">+ Emergency</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:familycreate' %}">+ Family</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:bankaccountcreate' %}">+ Bank Account</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'accounts:erasedusers' %}">Deleted Employees</a></li>
+
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard:payroll' %}">
+                <i class="mdi  mdi-cash-multiple menu-icon"></i>
+                <span class="menu-title">Payroll</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard:employees' %}">
+                <i class="mdi mdi-calendar-check menu-icon"></i>
+                <span class="menu-title">Form 16</span>
+            </a>
+        </li>
+        <!-- <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard:employees' %}">
+                  <i class="mdi mdi-account-check menu-icon"></i>
+                  <span class="menu-title">Approvel</span>
+                </a>
+              </li> -->
+        {% endif %}
+        <li class="nav-item ">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic2">
+                <i class="mdi mdi-bus menu-icon"></i>
+                <span class="menu-title">Employee Expence</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic3">
+                <ul class="nav flex-column sub-menu">
+                    <!-- <li class="nav-item "><a class="nav-link" href="#">Expense</a></li> -->
+                    {% if request.user.is_staff %}
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:expenseslist' %}">All Expence</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:expenseslist' %}">Pending Expence</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:approvedexpenselist' %}">Approved Expence</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:cancelexpenselist' %}">Cancelled Expence</a></li>
+                    <li class="nav-item "><a href="{% url 'dashboard:expenserejected' %}">Rejected Leaves</a></li>
+                    <li class="nav-item "></li><a class="nav-link" href="{% url 'dashboard:createExpense' %}">Apply for Expence</a></li>
+        {% else %}
+        <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:createExpense' %}">Applys for Expence</a></li>
+        <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:staffleavetable' %}">All Expence</a></li>
+        {% endif %}
+
+        </ul>
+        </div>
+        </li>
+        <!-- <li class="nav-item">
+                {% if request.user.is_superuser %}<a class="nav-link" href="{% url 'dashboard:leaveslist' %}">{% else %}<a class="nav-link" href="{% url 'dashboard:staffleavetable' %}"> {% endif %}
+              <i class="mdi mdi-emoticon menu-icon"></i>
+              <span class="menu-title">Leave</span>
+            </a>
+          </li> -->
+        <li class="nav-item ">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+                <i class="mdi mdi-emoticon menu-icon"></i>
+                <span class="menu-title">Leave</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+                <ul class="nav flex-column sub-menu">
+                    <!-- <li class="nav-item "><a class="nav-link" href="#">Expense</a></li> -->
+                    {% if request.user.is_staff %}
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:testdemo' %}">testdemo</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:leaveslist' %}">All Leaves</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:leaveslist' %}">Pending Leaves</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:approvedleaveslist' %}">Approved Leaves</a></li>
+                    <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:canceleaveslist' %}">Cancelled Leaves</a></li>
+                    <li class="nav-item "><a href="{% url 'dashboard:leavesrejected' %}">Rejected Leaves</a></li>
+                    <li class="nav-item "></li><a class="nav-link" href="{% url 'dashboard:createleave' %}">Apply for Leave</a></li>
+        {% else %}
+        <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:createleave' %}">Apply for Leave</a></li>
+        <li class="nav-item "><a class="nav-link" href="{% url 'dashboard:staffleavetable' %}">All Leaves</a></li>
+        {% endif %}
+
+        </ul>
+        </div>
+        </li>
+
+    </ul>
+</nav>
+{% endblock %}

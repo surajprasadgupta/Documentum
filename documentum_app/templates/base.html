@@ -1,0 +1,36 @@
+{% extends 'root.html' %}
+
+{% block main_menu %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+  
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="mdi mdi-account-multiple-plus menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li> -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'documentum_app:dashboard' %}">
+          <i class="mdi mdi-chart-pie menu-icon"></i>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'documentum_app:file_upload' %}">
+        <i class="mdi mdi-cloud-upload menu-icon"></i>
+        <span class="menu-title">Upload Documents</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'documentum_app:search_keyword' %}">
+        <i class="mdi mdi-account-circle menu-icon"></i>
+        <span class="menu-title">Search Documents</span>
+      </a>
+    </li>
+   
+        
+  
+  </ul>
+</nav>
+{% endblock %}

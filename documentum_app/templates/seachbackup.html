@@ -1,0 +1,182 @@
+{% load static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+
+    <link href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        #headbody{
+            padding:20px;
+            background-color: #2BBBAD;
+        }
+        #serchbox{
+            padding: 50px;
+            margin-top: 10px;
+            background-color: black;
+        }
+        #contentarea{
+            margin: 10px;
+            padding: 10px;
+        }
+        #tags_1_tagsinput{
+            border:1px solid gray;
+            border-radius:5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+                <div class="col-md-12" id="headbody" >
+                    <div class="row">
+                        <div class="col-md-6"><a href="{% url 'documentum_app:search_keyword' %}" style="color:white"><i class="mdi mdi-24px mdi-account-circle">seach keywords</i></a></div>
+                        <div class="col-md-6" style="text-align: right"><a href="{% url 'documentum_app:account_logout' %}" style="color:white"><i class="mdi mdi-24px mdi-account-circle">Log Out</i></a></div>
+                    </div>
+                    
+
+                </div>
+            
+        </div>
+        <div class="row"  id="serchbox">
+                <div class="col-md-4" >
+                    <!-- <div class="custom-file">
+                        <input type="file" class="form-control" name="file_upload" value="">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                      </div> -->
+                </div>
+                <div class="col-md-4" >
+                    <div class="row">
+                        <div class="col-md-6">
+                                <form action="{% url 'documentum_app:file_upload' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="custom-file">
+                                <input type="file" class="form-control" name="file_upload" value="">
+                                <!-- <label class="custom-file-label" for="inputGroupFile01">Choose file</label> -->
+                              </div>
+                             
+                        </div>
+                        <div class="col-md-6">
+                                <input type="submit" class="form-control" name="submit" value="Upload" style="width:40%">
+                        </div>
+                    </form>
+                    </div>
+                       
+                </div>
+            </div>
+        <div class="row" id="contentarea">
+            <div class="col-md-6" style="height:750px;">
+                {% if file %}
+                    <!-- <embed src="#" type="application/pdf"  min-height="700px" width="100%"> -->
+                <embed src="{{file.file_upload.url}}" type="application/pdf"   height="100%" width="100%">
+                    {% endif %}
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12"style="min-height:650px;">
+                            {% if text %}
+                            <p>{{text}}</p>
+                            {% endif %}
+                    </div>
+                </div>
+               
+                <div class="row">
+                        <div class="col-md-1"><lable ><h3 style="padding: 10px; margin-left:10px;float:right;"> Tags</h3></lable></div>
+                        <div class="form-group">
+                        <div class="col-md-9">
+                                <div class="txt-box-div" id="tag-div"><input type="text" name="tags" id="tags_1"
+                                    value="{{tags}}" class="tags" style="width: auto; min-height: 100px;"/>
+                                </div>
+                    </div>
+                </div>
+                        <div class="col-md-2"><input type="submit" class="form-control" style="height: 50px; margin-top: 40px;"></div>
+                    </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <form  action="#" method="POST">{% csrf_token %}
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3"><lable ><h3 style="padding: 10px; margin-left:10px;float:right;"> Tags</h3></lable></div>
+                    <div class="col-md-9"><input type="text" class="form-control" style="height: 100px;"></div>
+                </div>
+            </div>
+            <div class="col-md-2"><input type="submit" class="form-control" style="height: 50px; margin-top: 40px;"></div>
+        </form>
+        </div> -->
+    </div>
+    
+</body>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+<script src="https://malsup.github.io/jquery.form.js"></script>
+<script type="text/javascript">
+
+    // $(document).ready(function() {
+    //   $('.assigned_users').select2();
+    // });
+    
+  
+ 
+  
+  
+    function onAddTag(tag) {
+      alert("Added a tag: " + tag);
+    }
+    function onRemoveTag(tag) {
+      alert("Removed a tag: " + tag);
+    }
+  
+    function onChangeTag(input, tag) {
+      alert("Changed a tag: " + tag);
+    }
+  
+    $(function () {
+  
+      $('#tags_1').tagsInput({ width: 'auto' });
+      $('#tags_2').tagsInput({
+        width: 'auto',
+        onChange: function (elem, elem_tags) {
+          var languages = ['php', 'ruby', 'javascript'];
+          $('.tag', elem_tags).each(function () {
+            if ($(this).text().search(new RegExp('\\b(' + languages.join('|') + ')\\b')) >= 0)
+              $(this).css('background-color', 'yellow');
+          });
+        }
+      });
+      $('#tags_3').tagsInput({
+        width: 'auto',
+  
+        //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
+        autocomplete_url: 'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
+      });
+  
+  
+      // Uncomment this line to see the callback functions in action
+      //      $('input.tags').tagsInput({onAddTag:onAddTag,onRemoveTag:onRemoveTag,onChange: onChangeTag});   
+  
+      // Uncomment this line to see an input with no interface for adding new tags.
+      //      $('input.tags').tagsInput({interactive:false});
+    });
+   
+  
+  
+   
+  
+    // $('#call_save').click(function (e) {
+    //   e.preventDefault()
+    //   console.log($('#formid').serialize())
+    //   console.log($('#formid').serializeArray())
+  
+    // })
+  </script>
+</html>

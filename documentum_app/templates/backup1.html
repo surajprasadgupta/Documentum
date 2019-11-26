@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block breadcrumb %}
+{% block extralinks %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css" rel="stylesheet">
+
+{% endblock %}
+
+<style>
+    #headbody {
+        padding: 20px;
+        background-color: #2BBBAD;
+    }
+
+    #serchbox {
+        padding: 20px;
+        margin-top: 10px;
+        background-color: gray;
+        /* min-height:250px;  */
+        margin: 5px;
+        /* box-shadow: 5px 10px #888888; */
+        box-shadow: 0 8px 6px -6px black;
+     
+    }
+    #file_upload{
+        margin-top: 3%;
+       
+    }
+
+    #contentarea {
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    #tags_1_tagsinput {
+        border: 1px solid gray;
+        border-radius: 5px;
+        /* width:80% !important; */
+    }
+    .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link {
+    margin: 5px;
+}
+.dropdown{
+    margin-top: 13%;
+}
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="row" id="serchbox">
+        <div class="col-md-3">
+             
+        </div>
+        <div class="col-md-6" id="file_upload">
+            <div class="row">
+                <div class="col-md-8">
+                    <form action="{% url 'documentum_app:file_upload' %}" method="POST"
+                        enctype="multipart/form-data">{% csrf_token %}
+                        <div class="custom-file">
+                            <input type="file" class="form-control" name="file_upload" value=""multiple>
+                            <!-- <label class="custom-file-label" for="inputGroupFile01">Choose file</label> -->
+                        </div>
+
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Upload" style="width:40%;margin-top: 3px;">
+                </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" id="contentarea">
+        <div class="col-md-6" style="min-height:600px;">
+            {% if file %}
+            <!-- <embed src="#" type="application/pdf"  min-height="700px" width="100%"> -->
+            <embed src="{{file.file_upload.url}}" type="application/pdf" height="100%" width="100%">
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <form action="{% url 'documentum_app:create_contant' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12" style="min-height:650px;">
+                        {% if text %}
+                        <!-- <p style="padding: 10px;">{{text}}</p> -->
+                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" name="content"rows="43%" value="{{text}}"
+                            readonly>{{text}}</textarea>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                            {% if tags %}
+                        <div class="col-md-1">
+                               
+                            <lable>
+                                <h3 style="padding: 10px; margin-left:10px;float:right;"> Tags</h3>
+                            </lable>
+                            <input type="hidden" name="uploaded_file" value="{{file.file_upload.url}}">
+                            <input type="hidden" name="user" value="{{user.username}}">
+                            <input type="hidden" name="company_code" value="{{request.session.company_code}}">
+                            <input type="hidden" name="file_name" value="{{file_name}}">
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-9" style=" min-height: 100px;">
+                               
+                                <div class="txt-box-div" id="tag-div"><input type="text" name="tags" id="tags_1"
+                                        value='{{tags}}' class="tags" />
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-2"><input type="submit" class="btn btn-primary"
+                                style="height: 50px; margin-top: 40px;"></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        
+    </div> -->
+     <!-- pagination -->
+     <!-- <div class="row" style="margin: 20px;">
+            <div class="col-md-12">
+                {% if magazines.has_other_pages %}
+                <ul class="pagination">
+                    {% if magazines.has_previous %}
+                    <li><a href="?page={{ magazines.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %} {% for i in magazines.paginator.page_range %} {% if magazines.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                    </li>
+                    {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %} {% endfor %} {% if magazines.has_next %}
+                    <li><a href="?page={{ magazines.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+        </div> -->
+           <!-- pagination -->
+</div>
+
+
+
+{% endblock %}
+{% block js_block %}
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+<script src="https://malsup.github.io/jquery.form.js"></script>
+<script type="text/javascript">
+
+    // $(document).ready(function() {
+    //   $('.assigned_users').select2();
+    // });
+
+
+
+
+
+    // function onAddTag(tag) {
+    //   alert("Added a tag: " + tag);
+    // }
+    // function onRemoveTag(tag) {
+    //   alert("Removed a tag: " + tag);
+    // }
+
+    // function onChangeTag(input, tag) {
+    //   alert("Changed a tag: " + tag);
+    // }
+
+    $(function () {
+
+        $('#tags_1').tagsInput({ width: '500px' });
+        $('#tags_2').tagsInput({
+            width: 'auto',
+            onChange: function (elem, elem_tags) {
+                var languages = ['php', 'ruby', 'javascript'];
+                $('.tag', elem_tags).each(function () {
+                    if ($(this).text().search(new RegExp('\\b(' + languages.join('|') + ')\\b')) >= 0)
+                        $(this).css('background-color', 'yellow');
+                });
+            }
+        });
+        $('#tags_3').tagsInput({
+            width: 'auto',
+
+            //autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
+            autocomplete_url: 'test/fake_json_endpoint.html' // jquery ui autocomplete requires a json endpoint
+        });
+
+
+        // Uncomment this line to see the callback functions in action
+        //      $('input.tags').tagsInput({onAddTag:onAddTag,onRemoveTag:onRemoveTag,onChange: onChangeTag});   
+
+        // Uncomment this line to see an input with no interface for adding new tags.
+        //      $('input.tags').tagsInput({interactive:false});
+    });
+    function remove_attachment(x) {
+        const con = confirm("Do you want to Delete it for Sure!?");
+        if (con == true) {
+            $.post('#', {
+                "attachment_id": x
+            }, function (data) {
+                if (data.error) {
+                    alert(data.errors)
+                } else {
+                    $("#attachment" + data.attachment_object).remove()
+                }
+            })
+        }
+    }
+
+
+
+    $('form#formid').ajaxForm({
+        type: 'POST',
+        dataType: 'json',
+        url: ".",
+        data: $('#formid').serialize(),
+        success: function (data) {
+            if (data.error) {
+                $('.error').html('')
+                for (var key in data.errors) {
+                    $('#id__' + key).html("<p>" + data.errors[key][0] + "</p>");
+                };
+                $('#submit_btn').removeAttr('disabled')
+            }
+            else {
+                window.location = data.success_url;
+            }
+        }
+    });
+</script>
+{% endblock js_block %}

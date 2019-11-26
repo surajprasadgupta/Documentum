@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>choose file</title>
+    <meta charset="utf-8">
+    <!-- <meta content="width=device-width, initial-scale=1.0" name="viewport"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Fonts -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        #header {
+            padding: 30px 0;
+            height: 92px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            transition: all 0.5s;
+            z-index: 997;
+            background-color: black;
+            box-sizing: border-box;
+        }
+
+        ul.nav-menu li {
+            display: inline;
+            margin: 1px;
+            padding: 10px;
+        }
+
+        #nav-menu-container {
+            float: right;
+        }
+
+        dl,
+        ol,
+        ul {
+            /*margin-top: px;*/
+            margin-bottom: 1rem;
+        }
+
+        #footer {
+            background: #343b40;
+            padding: 30px 0;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        #footercs {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!--==========================
+        Header
+        ============================-->
+    <header id="header">
+        <div class="container" style="background-color: black">
+            <div class="pull-left">
+                <a style="text-decoration: none; color:#fff;"class="navbar-brand" href="/">
+                    Documentum
+                </a>
+          <!--   </div> -->
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li><a style="text-decoration: none; color:#fff;" href="/#support">Support</a></li>
+                    <li><a style="text-decoration: none; color:#fff;" href="/#contact">Contact Us</a></li>
+                    {% if request.user %}}
+                    <li><a style="text-decoration: none; color:#fff;" href="{% url 'documentum_app:account_logout' %}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <!--#nav-menu-container -->
+        </div>
+    </header>
+    <!-- #header -->
+
+
+    <div style="padding-top:20%"></div>
+    <div align="center">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-sm-12 col-xm-12 text-center" style="padding-top: 20px;">
+            <h2>Company </h2>
+            <div style="padding-bottom:5%"></div>
+            <form action="{% url 'documentum_app:dashboard'%}" method="POST">{% csrf_token %}
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <center><label class="input-group-text" for="choose_company">Choose your Company</label>
+                        </center>
+                    </div>
+                    <select class="custom-select" id="company_name" name="company_code">
+                        <option disabled="">Choose...</option>
+                         {% for comp in company %}   
+                        <option value="{{comp.company_code}}">{{comp.company_name}}</option>
+                        {% endfor %}
+<!-- 
+                        <option value="2">ABC</option>
+
+                        <option value="3">Google</option> -->
+
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div style="padding:10%"></div>
+
+
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+
+            </div>
+        </div>
+
+        <div class="container" id="footercs">
+            <div class="copyright">
+                &copy; Copyright <strong>Akounter</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+        </div>
+    </footer><!-- #footer -->
+
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+
+
+</body>
+
+</html>
